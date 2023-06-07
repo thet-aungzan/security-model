@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <title></title>
+    <!-- bootstrap-icons 1 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style type="text/css">
+        @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@200&display=swap');
+        /* font-family: 'Mulish', sans-serif; */
+
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Mulish', sans-serif;
+
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+        }
+
+        .sidebar {
+            height: 100Vh;
+            position: fixed;
+            inset: '';
+            width: 75px;
+            background: #e5e5e5;
+
+            position: relative;
+
+            font-size: 14px;
+
+            display: flex;
+            justify-content: center;
+
+            padding: 100px 0;
+
+            transition: width ease-out .8s;
+            z-index: 1000;
+        }
+
+        .sidebar.active {
+            width: 250px;
+        }
+
+        .sidebar .menutoggle {
+            position: absolute;
+            left: 0;
+            top: 0;
+
+            width: 100%;
+            height: 80px;
+
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+
+            cursor: pointer;
+            border-bottom: 1px solid silver;
+
+            padding: 0 23px;
+        }
+
+        .sidebar .menutoggle::before {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 2px;
+            background: #333;
+            transform: translateY(-8px);
+        }
+
+        .sidebar .menutoggle::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 2px;
+            background: #333;
+            transform: translateY(8px);
+            box-shadow: 0 -8px 0 #333;
+        }
+
+        .sidebar .sidebar-list {
+            width: 100%;
+        }
+
+        .sidebar-list .sidebar-list-item {
+            width: 100%;
+            height: 60px;
+
+            line-height: 60px;
+            list-style: none;
+        }
+
+        .sidebar-list .sidebar-list-item .sidebar-link {
+
+            display: flex;
+            justify-content: flex-start;
+
+            padding: 0 23px;
+
+            text-transform: uppercase;
+            text-decoration: none;
+
+            color: #222;
+        }
+
+        .sidebar-list .sidebar-list-item .sidebar-link .sidebar-link-icon {
+            font-size: 1.23rem;
+            margin: 0 5px;
+        }
+
+        .sidebar .sidebar-list .sidebar-list-item .sidebar-link .sidebar-link-text {
+            opacity: 0;
+            visibility: hidden;
+
+            transition: all ease .7s;
+        }
+
+        .sidebar.active .sidebar-list .sidebar-list-item .sidebar-link .sidebar-link-text {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(6px);
+            transition: all ease .7s;
+        }
+
+        .fromleft {
+            animation-name: fromleft;
+            animation-duration: 1s;
+        }
+
+        @keyframes fromleft {
+            0% {
+                transform: translateX(-120px);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .dashboard-view {
+            padding: 30px 0 0 20px;
+        }
+
+        .text-title {
+            font-size: 24px;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sample-text {
+            font-size: 16px;
+            margin: 20px 0;
+            letter-spacing: 1px;
+
+            text-transform: capitalize;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar fromleft">
+        <div class="menutoggle"></div>
+        <ul class="sidebar-list">
+            <li class="sidebar-list-item">
+                <a href="#" th:href="@{/home}" class="sidebar-link" title="DASHBOARD">
+                    <span class="sidebar-link-icon"><i class="bi bi-house"></i></span>
+                    <span class="sidebar-link-text">dashboard</span>
+                </a>
+            </li>
+            <li class="sidebar-list-item">
+                <a href="#" class="sidebar-link" title="MESSAGES">
+                    <span class="sidebar-link-icon"><i class="bi bi-chat-dots"></i></span>
+                    <span class="sidebar-link-text">message</span>
+                </a>
+            </li>
+            <li class="sidebar-list-item">
+                <a href="#" th:href="@{/products}" class="sidebar-link" title="PRODUCTS">
+                    <span class="sidebar-link-icon"><i class="bi bi-grid-1x2-fill"></i></span>
+                    <span class="sidebar-link-text">products</span>
+                </a>
+            </li>
+            <li class="sidebar-list-item">
+                <a href="#" class="sidebar-link" title="ABOUT">
+                    <span class="sidebar-link-icon"><i class="bi bi-info-circle"></i></span>
+                    <span class="sidebar-link-text">about</span>
+                </a>
+            </li>
+            <li class="sidebar-list-item">
+                <a href="profile.html" class="sidebar-link" title="SETTING">
+                    <span class="sidebar-link-icon"><i class="bi bi-gear"></i></span>
+                    <span class="sidebar-link-text">setting</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <section class="dashboard-view">
+        <h3 class="text-title">Welcome Admin Pannel</h3>
+        <h4 style="font-weight: lighter;color: #888;">
+            authorization user : <span sec:authentication="name" style="text-transform: capitalize;"></span> | <span
+                sec:authentication="authorities" style="text-transform: lowercase;"></span>
+        </h4>
+
+        <p class="sample-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+            has been the industry's.</p>
+
+        <div style="width: 65%;">
+            <canvas id="myChart"></canvas>
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script type="text/javascript">
+        var menubutton = document.querySelector(".menutoggle");
+        var sidebar = document.querySelector(".sidebar");
+        menubutton.addEventListener("click", function () {
+            sidebar.classList.toggle("active");
+        });
+
+    </script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const ctx = document.getElementById('myChart');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: 'PRODUCTS',
+                    data: [12, 19, 3, 5, 2, 3],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
